@@ -22,4 +22,4 @@ $(OBJDIR)/%.o:	$(SRCDIR)/%.cc
 
 
 clean:
-	rm	-f	$(OBJDIR)/*.o	$(BINDIR)/*
+	rm	-rf	$(OBJDIR)/*.o	$(BINDIR)/*
