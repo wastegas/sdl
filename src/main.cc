@@ -35,6 +35,12 @@ int main(int argc, char** argv)
 	  //get window surface handle
 	  surface = SDL_GetWindowSurface(window);
 
+	  //main loop flag
+	  bool quit = false;
+
+	  //event handler
+	  SDL_Event e;
+
 	  //Fill the surface with white
 	  SDL_FillRect(surface, NULL,
 				   SDL_MapRGB(surface->format,
@@ -44,7 +50,20 @@ int main(int argc, char** argv)
 	  SDL_UpdateWindowSurface(window);
 
 	  //Show window for 2 seconds the close
-	  SDL_Delay(2000);
+	  //SDL_Delay(2000);
+
+	  while(!quit) {
+
+		  while(SDL_PollEvent(&e) != 0) {
+			
+			  //User request quit
+			  if(e.type == SDL_QUIT) {
+				  quit = true;
+			  }
+
+		  }
+
+	  }		  
   }
 
   //Destroy window
