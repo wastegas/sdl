@@ -2,7 +2,6 @@
 
 SDL_Surface* load_surface(std::string path)
 {
-  std::cout << "load_surface(" << path << ")\n";
   //Load images from specified path
   SDL_Surface* loaded_surface = SDL_LoadBMP(path.c_str());
 
@@ -15,11 +14,9 @@ SDL_Surface* load_surface(std::string path)
 
 bool load_media(SDL_Surface* gKeyPressSurfaces[])
 {
-  std::cout << "starting load_media\n";
   //loading success flag
   bool success = true;
 
-  std::cout << "loading press\n";
   //load default surface
   gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] = load_surface("../data/press.bmp");
   if(gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] == nullptr) {
@@ -27,7 +24,6 @@ bool load_media(SDL_Surface* gKeyPressSurfaces[])
 	  success = false;
   }
 
-  std::cout << "loading up\n";
   //load up surface
   gKeyPressSurfaces[KEY_PRESS_SURFACE_UP] = load_surface("../data/up.bmp");
   if(gKeyPressSurfaces[KEY_PRESS_SURFACE_UP] == nullptr) {
@@ -35,7 +31,6 @@ bool load_media(SDL_Surface* gKeyPressSurfaces[])
 	  success = false;
   }
 
-  std::cout << "loading down\n";
   //load down surface
   gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] = load_surface("../data/down.bmp");
   if(gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] == nullptr) {
@@ -43,7 +38,6 @@ bool load_media(SDL_Surface* gKeyPressSurfaces[])
 	  success = false;
   }
 
-  std::cout << "loading left\n";
   //load left surface
   gKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] = load_surface("../data/left.bmp");
   if(gKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] == nullptr) {
@@ -51,7 +45,6 @@ bool load_media(SDL_Surface* gKeyPressSurfaces[])
 	  success = false;
   }
 
-  std::cout << "loading right\n";
   //load right surface
   gKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] = load_surface("../data/right.bmp");
   if(gKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] == nullptr) {
@@ -59,7 +52,6 @@ bool load_media(SDL_Surface* gKeyPressSurfaces[])
 	  success = false;
   }
 
-  std::cout << "done loading media\n";
   return success;
 }
 
@@ -82,23 +74,18 @@ bool init(SDL_Window** gWindow,
 								 SCREEN_WIDTH,
 								 SCREEN_HEIGHT,
 								 SDL_WINDOW_SHOWN);
-	  std::cout << "gWindow's address" << static_cast<void*>(gWindow) << '\n'; 
   }
   if(gWindow == nullptr) {
 	  std::cerr << "Window could not be created! SDL_Error: "
 		<< SDL_GetError() << '\n';
 	  success = false;
   } else {
-	  std::cout << "gWindow created\n";
 	  *gScreenSurface = SDL_GetWindowSurface(*gWindow);
-	  std::cout << "gScreenSurface in init is at " << static_cast<void*>(gScreenSurface)
-		<< '\n';
 	  if(gScreenSurface == nullptr) {
 		  std::cerr << "Unable to get handle for surface! SDL_Error: "
 			<< SDL_GetError() << '\n';
 		  success = false;
 	  } else {
-		  std::cout << "gScreenSurface handle created\n";
 		  load_media(gKeyPressSurfaces);
 		  std::cout << "init complete\n";
 	  }

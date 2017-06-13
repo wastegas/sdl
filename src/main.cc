@@ -13,20 +13,14 @@ int main(int argc, char** argv)
 	  return 1;
   } else {
 
-		std::cout << "declaring in main\n";
 		//event handler
 		SDL_Event e;
-		std::cout << "coloring surface\n";
+
 		//Fill the surface with white
-		if (gScreenSurface == nullptr ) {
-			std::cout << "gScreenSurface at " << static_cast<void*>(gScreenSurface) << " is null cannot continue\n";
-			return 1;
-		}
 		SDL_FillRect(gScreenSurface, NULL,
 					 SDL_MapRGB(gScreenSurface->format,
 								0xFF, 0xFF, 0xFF));
 		
-		std::cout << "updating surface\n";
 		//Update the surface
 		if (gWindow == nullptr) {
 			std::cout << "gWindow is null\n";
@@ -36,11 +30,9 @@ int main(int argc, char** argv)
 
 		bool quit_app = false;
 
-		std::cout << "setting default surface\n";
 		// set default surface
 		gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT];
 
-		std::cout << "entering main loop\n";
 		while(!quit_app) {
 
 			while(SDL_PollEvent(&e) != 0) {
