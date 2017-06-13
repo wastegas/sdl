@@ -1,76 +1,86 @@
 #include <iostream>
-#include <SDL.h>
-
-//Screen dimensions
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+#include "app.h"
 
 int main(int argc, char** argv)
 {
-  //The window to render
-  SDL_Window* window = NULL;
 
-  //The surface in the window
-  SDL_Surface* surface = NULL;
+  SDL_Window* gWindow = NULL;			// window that will be rendered
+  SDL_Surface* gScreenSurface = NULL;	// surface in our window
+  SDL_Surface* gCurrentSurface = NULL;			// current displayed image
+  SDL_Surface* gKeyPressSurfaces[KEY_PRESS_SURFACE_TOTAL];
 
-  //Initialize SDL
-  if(SDL_Init(SDL_INIT_VIDEO) < 0) {
-	  std::cout << "SDL could not initialize! SDL_Error: "
-		<< SDL_GetError() << '\n';
+  if(!init(&gWindow, &gScreenSurface, gKeyPressSurfaces)) {
 	  return 1;
   } else {
-	  //Create window
-	  window = SDL_CreateWindow("SDL Tutorial",	  // window title
-								SDL_WINDOWPOS_UNDEFINED, //y pos
-								SDL_WINDOWPOS_UNDEFINED, //x pos
-								SCREEN_WIDTH,
-								SCREEN_HEIGHT,
-								SDL_WINDOW_SHOWN);
-  }
-  if(window == nullptr) {
-	  std::cout << "Window could not be created! SDL_Error: "
-		<< SDL_GetError() << '\n';
-	  return 1;
-  } else {
-	  //get window surface handle
-	  surface = SDL_GetWindowSurface(window);
 
-	  //main loop flag
-	  bool quit = false;
+		std::cout << "declaring in main\n";
+		//event handler
+		SDL_Event e;
+		std::cout << "coloring surface\n";
+		//Fill the surface with white
+		if (gScreenSurface == nullptr ) {
+			std::cout << "gScreenSurface at " << static_cast<void*>(gScreenSurface) << " is null cannot continue\n";
+			return 1;
+		}
+		SDL_FillRect(gScreenSurface, NULL,
+					 SDL_MapRGB(gScreenSurface->format,
+								0xFF, 0xFF, 0xFF));
+		
+		std::cout << "updating surface\n";
+		//Update the surface
+		if (gWindow == nullptr) {
+			std::cout << "gWindow is null\n";
+			return 1;
+		}
+		SDL_UpdateWindowSurface(gWindow);
 
-	  //event handler
-	  SDL_Event e;
+		bool quit_app = false;
 
-	  //Fill the surface with white
-	  SDL_FillRect(surface, NULL,
-				   SDL_MapRGB(surface->format,
-							  0xFF, 0xFF, 0xFF));
+		std::cout << "setting default surface\n";
+		// set default surface
+		gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT];
 
-	  //Update the surface
-	  SDL_UpdateWindowSurface(window);
+		std::cout << "entering main loop\n";
+		while(!quit_app) {
 
-	  //Show window for 2 seconds the close
-	  //SDL_Delay(2000);
+			while(SDL_PollEvent(&e) != 0) {
+			  
+				//User request quit
+				if(e.type == SDL_QUIT) {
+					quit_app = true;
+				} else if(e.type == SDL_KEYDOWN) {  // user pressed a key
+					// select surfaces based on key pressed
+					switch(e.key.keysym.sym) {
+					  case SDLK_UP:
+						gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_UP];
+						break;
+					  case SDLK_DOWN:
+						gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN];
+						break;
+					  case SDLK_LEFT:
+						gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT];
+						break;
+					  case SDLK_RIGHT:
+						gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT];
+						break;
+					  default:
+						gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT];
+						break;
+					}
 
-	  while(!quit) {
-
-		  while(SDL_PollEvent(&e) != 0) {
-			
-			  //User request quit
-			  if(e.type == SDL_QUIT) {
-				  quit = true;
 			  }
+			}
 
-		  }
+			//Apply current image
+			SDL_BlitSurface(gCurrentSurface, NULL, gScreenSurface, NULL);
 
-	  }		  
+			//Update the surface
+			SDL_UpdateWindowSurface(gWindow);
+
+		}		  
   }
 
-  //Destroy window
-  SDL_DestroyWindow(window);
-
-  //Quit SDL subsystem
-  SDL_Quit();
+  quit(gWindow);
 
   return 0;
 }
