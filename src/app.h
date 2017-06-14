@@ -22,8 +22,8 @@ enum KeyPressSurfaces
 
 bool init(SDL_Window**, 
 		  SDL_Surface**, SDL_Surface* []);	// startup SDL and create window
-bool load_media(SDL_Surface*);			// loads media	
+bool load_media(SDL_Surface*, SDL_Surface**);			// loads media	
 void quit(SDL_Window*);					// free media and shutdown SDL
-SDL_Surface* load_surface(std::string); // load individual image
+SDL_Surface* load_surface(std::string, SDL_Surface*); // load individual image
 
 #endif // APP_H
