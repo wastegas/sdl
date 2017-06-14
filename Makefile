@@ -1,7 +1,7 @@
 CXX	=	c++
 FRAMEWORK_PATH=/Library/Frameworks
-INCLUDES=-I/Library/Frameworks/SDL2.Framework/Headers/	-I./
-CXXFLAGS=-std=c++14	$(INCLUDES)	-F$(FRAMEWORK_PATH)	-framework	SDL2	-framework	Cocoa	-Wall	-g
+INCLUDES=-I/Library/Frameworks/SDL2.Framework/Headers/	-I/Library/Frameworks/SDL2_image.Framework/Headers	-I./
+CXXFLAGS=-std=c++14	$(INCLUDES)	-F$(FRAMEWORK_PATH)	-framework	SDL2_image	-framework	SDL2	-framework	Cocoa	-Wall	-g
 LXXDFLAGS=-stdlib=libc++
 SRCDIR=src
 OBJDIR=obj
