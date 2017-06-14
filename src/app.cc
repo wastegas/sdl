@@ -7,7 +7,7 @@ SDL_Surface* load_surface(std::string path, SDL_Surface* gScreenSurface)
   SDL_Surface* optimized_surface = NULL;
 
   //Load images from specified path
-  SDL_Surface* loaded_surface = SDL_LoadBMP(path.c_str());
+  SDL_Surface* loaded_surface = IMG_Load(path.c_str());
 
   if(loaded_surface == nullptr) {
 	std::cerr << "Unable to load image " 
@@ -33,7 +33,7 @@ bool load_media(SDL_Surface* gKeyPressSurfaces[], SDL_Surface** gScreenSurface)
   bool success = true;
 
   //load default surface
-  gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] = load_surface("../data/press.bmp", *gScreenSurface);
+  gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] = load_surface("../data/loaded.png", *gScreenSurface);
   if(gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] == nullptr) {
 	  std::cerr << "Failed to load default image\n";
 	  success = false;
@@ -95,13 +95,20 @@ bool init(SDL_Window** gWindow,
 		<< SDL_GetError() << '\n';
 	  success = false;
   } else {
-	  *gScreenSurface = SDL_GetWindowSurface(*gWindow);
-	  if(gScreenSurface == nullptr) {
-		  std::cerr << "Unable to get handle for surface! SDL_Error: "
-			<< SDL_GetError() << '\n';
-		  success = false;
+	  //Initialize PNG loading
+	  int imgFlags = IMG_INIT_PNG;
+	  if(!(IMG_Init(imgFlags) & imgFlags)) {
+		 std::cerr << "SDL_Image could initilize! SDL_Image Error: "
+		  << IMG_GetError() << '\n';
 	  } else {
+		*gScreenSurface = SDL_GetWindowSurface(*gWindow);
+		if(gScreenSurface == nullptr) {
+			std::cerr << "Unable to get handle for surface! SDL_Error: "
+			  << SDL_GetError() << '\n';
+			success = false;
+		} else {
 		  load_media(gKeyPressSurfaces, gScreenSurface);
+		}
 	  }
   }
 
