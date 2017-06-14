@@ -83,7 +83,7 @@ bool init(SDL_Window** gWindow,
 	  success = false;
   } else {
 	  //create window
-	  *gWindow = SDL_CreateWindow("SDL Key Pressed Events",
+	  *gWindow = SDL_CreateWindow("SDL Basics",
 								 SDL_WINDOWPOS_UNDEFINED,
 								 SDL_WINDOWPOS_UNDEFINED,
 								 SCREEN_WIDTH,
