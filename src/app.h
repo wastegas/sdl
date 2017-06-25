@@ -21,10 +21,12 @@ enum KeyPressSurfaces
   KEY_PRESS_SURFACE_TOTAL
 };
 
-bool init(SDL_Window**, 
-		  SDL_Surface**, SDL_Surface* []);	// startup SDL and create window
-bool load_media(SDL_Surface*, SDL_Surface**);			// loads media	
-void quit(SDL_Window*);					// free media and shutdown SDL
-SDL_Surface* load_surface(std::string, SDL_Surface*); // load individual image
+bool init(SDL_Window**,
+		  SDL_Texture**, 
+		  SDL_Renderer**);	// startup SDL and create window
+bool load_media(SDL_Texture**, SDL_Renderer**);			// loads media	
+void quit(SDL_Window*, SDL_Texture*, SDL_Renderer*);					// free media and shutdown SDL
+//SDL_Surface* load_surface(std::string); // load individual image
+SDL_Texture* load_texture(std::string, SDL_Renderer**);
 
 #endif // APP_H
