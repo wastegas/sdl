@@ -5,17 +5,22 @@ int main(int argc, char** argv)
 {
 
   SDL_Window* gWindow = NULL;			// window that will be rendered
+  /*
   SDL_Surface* gScreenSurface = NULL;	// surface in our window
   SDL_Surface* gCurrentSurface = NULL;			// current displayed image
   SDL_Surface* gKeyPressSurfaces[KEY_PRESS_SURFACE_TOTAL];
+  */
+  SDL_Texture* gTexture = NULL;
+  SDL_Renderer* gRenderer = NULL;
 
-  if(!init(&gWindow, &gScreenSurface, gKeyPressSurfaces)) {
+  if(!init(&gWindow, &gTexture, &gRenderer)) {
 	  return 1;
   } else {
 
 		//event handler
 		SDL_Event e;
 
+		/*
 		//Fill the surface with white
 		SDL_FillRect(gScreenSurface, NULL,
 					 SDL_MapRGB(gScreenSurface->format,
@@ -27,11 +32,11 @@ int main(int argc, char** argv)
 			return 1;
 		}
 		SDL_UpdateWindowSurface(gWindow);
-
+		*/
 		bool quit_app = false;
 
 		// set default surface
-		gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT];
+		//gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT];
 
 		while(!quit_app) {
 
@@ -40,6 +45,8 @@ int main(int argc, char** argv)
 				//User request quit
 				if(e.type == SDL_QUIT) {
 					quit_app = true;
+				}
+				/*
 				} else if(e.type == SDL_KEYDOWN) {  // user pressed a key
 					// select surfaces based on key pressed
 					switch(e.key.keysym.sym) {
@@ -61,8 +68,9 @@ int main(int argc, char** argv)
 					}
 
 			  }
+			  */
 			}
-
+			/*
 			//Apply the stretched surface
 			SDL_Rect stretch_rect;
 			stretch_rect.x = 0;
@@ -73,11 +81,20 @@ int main(int argc, char** argv)
 
 			//Update the surface
 			SDL_UpdateWindowSurface(gWindow);
+			*/
 
+			//Clear screen
+			SDL_RenderClear(gRenderer);
+			
+			//Render texture to screen
+			SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
+
+			//Update screen
+			SDL_RenderPresent(gRenderer);
 		}		  
   }
 
-  quit(gWindow);
+  quit(gWindow, gTexture, gRenderer);
 
   return 0;
 }
