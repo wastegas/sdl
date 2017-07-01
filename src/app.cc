@@ -142,6 +142,7 @@ bool init(SDL_Window** gWindow,
 		  //Initialize Renderer color
 		  SDL_SetRenderDrawColor(*gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	  }
+	  /*
 	  //Initialize PNG loading
 	  int imgFlags = IMG_INIT_PNG;
 	  if(!(IMG_Init(imgFlags) & imgFlags)) {
@@ -150,6 +151,7 @@ bool init(SDL_Window** gWindow,
 	  } else {
 			load_media(gTexture, gRenderer);
 	  }
+	  */
   }
 
   return success;
