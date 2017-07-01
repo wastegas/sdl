@@ -91,11 +91,35 @@ int main(int argc, char** argv)
 
 			//Update screen
 			//SDL_RenderPresent(gRenderer);
-
-			SDL_Rect fillRect = {SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4, 
-				SCREEN_WIDTH / 2, SCREEN_WIDTH / 2,};
+			SDL_Rect fillRect;
+			fillRect.x = SCREEN_WIDTH / 4;
+			fillRect.y = SCREEN_HEIGHT / 4;
+			fillRect.w = SCREEN_WIDTH / 2;
+			fillRect.h = SCREEN_HEIGHT / 2;
 			SDL_SetRenderDrawColor( gRenderer, 0xFF, 0x00, 0x00, 0xFF );
 			SDL_RenderFillRect( gRenderer, &fillRect );
+
+			// draw green outline
+			SDL_Rect outlineRect;
+			outlineRect.x = SCREEN_WIDTH / 6;
+			outlineRect.y = SCREEN_HEIGHT / 6;
+			outlineRect.w = SCREEN_WIDTH * 2 / 3;
+			outlineRect.h = SCREEN_HEIGHT * 2 / 3;
+
+			SDL_SetRenderDrawColor( gRenderer, 0x00, 0xFF, 0x00, 0xFF );
+			SDL_RenderDrawRect( gRenderer, &outlineRect);
+
+			// draw blue horizontal line in the middle
+			SDL_SetRenderDrawColor( gRenderer, 0x00, 0x00, 0xFF, 0xFF );
+			SDL_RenderDrawLine( gRenderer, 0, SCREEN_HEIGHT / 2, SCREEN_WIDTH,
+							   SCREEN_HEIGHT / 2);
+
+			// draw vertical yellow line w/ dots
+			SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+			for (int i = 0; i < SCREEN_HEIGHT; i += 4) {
+				SDL_RenderDrawPoint( gRenderer, SCREEN_WIDTH / 2, i);
+			}
+
 			//Update screen
 			SDL_RenderPresent(gRenderer);
 
