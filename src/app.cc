@@ -141,6 +141,7 @@ bool init(SDL_Window** gWindow,
 	  } else {
 		  //Initialize Renderer color
 		  SDL_SetRenderDrawColor(*gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+		  std::cout << "set the background color to white\n";
 	  }
 	  /*
 	  //Initialize PNG loading
