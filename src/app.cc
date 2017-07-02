@@ -143,7 +143,6 @@ bool init(SDL_Window** gWindow,
 		  SDL_SetRenderDrawColor(*gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 		  std::cout << "set the background color to white\n";
 	  }
-	  /*
 	  //Initialize PNG loading
 	  int imgFlags = IMG_INIT_PNG;
 	  if(!(IMG_Init(imgFlags) & imgFlags)) {
@@ -152,7 +151,6 @@ bool init(SDL_Window** gWindow,
 	  } else {
 			load_media(gTexture, gRenderer);
 	  }
-	  */
   }
 
   return success;
