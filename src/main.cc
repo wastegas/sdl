@@ -88,7 +88,9 @@ int main(int argc, char** argv)
 			
 			//Render texture to screen
 			//SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
-
+			
+			/*  Geometry code
+			 *
 			//Update screen
 			//SDL_RenderPresent(gRenderer);
 			SDL_Rect fillRect;
@@ -119,6 +121,40 @@ int main(int argc, char** argv)
 			for (int i = 0; i < SCREEN_HEIGHT; i += 4) {
 				SDL_RenderDrawPoint( gRenderer, SCREEN_WIDTH / 2, i);
 			}
+
+			*/
+
+			//top left viewport
+			SDL_Rect topLeftViewport;
+			topLeftViewport.x = 0;
+			topLeftViewport.y = 0;
+			topLeftViewport.w = SCREEN_WIDTH / 2;
+			topLeftViewport.h = SCREEN_HEIGHT / 2;
+			SDL_RenderSetViewport( gRenderer, &topLeftViewport );
+
+			//render texture to screen
+			SDL_RenderCopy( gRenderer, gTexture, NULL, NULL );
+
+			//top right viewport
+			SDL_Rect topRightViewport;
+			topRightViewport.x = SCREEN_WIDTH / 2;
+			topRightViewport.y = 0;
+			topRightViewport.w = SCREEN_WIDTH / 2;
+			topRightViewport.h = SCREEN_HEIGHT / 2;
+			SDL_RenderSetViewport( gRenderer, &topRightViewport );
+
+			//render texture to screen
+			SDL_RenderCopy( gRenderer, gTexture, NULL, NULL );
+
+			//bottom viewport
+			SDL_Rect bottomViewport;
+			bottomViewport.x = 0;
+			bottomViewport.y = SCREEN_HEIGHT / 2;
+			bottomViewport.w = SCREEN_WIDTH;
+			bottomViewport.h = SCREEN_HEIGHT / 2;
+			SDL_RenderSetViewport( gRenderer, &bottomViewport );
+
+			SDL_RenderCopy( gRenderer, gTexture, NULL, NULL );
 
 			//Update screen
 			SDL_RenderPresent(gRenderer);
